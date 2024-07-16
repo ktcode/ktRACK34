@@ -1,7 +1,8 @@
 //
-// ktRack34
+// ktRACK34
 //
 //
+
 
 
 gap1 = 0.001;
@@ -9,62 +10,72 @@ gap2 = 0.002;
 th = 2;
 
 
-translate([0, 0, 0]) bar();
-translate([0, 15, 0]) bar();
-translate([0, 30, 0]) bar();
-translate([0, 45, 0]) bar();
-translate([0, 60, 0]) bar();
-translate([0, 75, 0]) bar();
+
+base();
+arm();
 
 
 
-
-translate([115, 0, 0]) pin();
-translate([130, 0, 0]) pin();
-translate([145, 0, 0]) pin();
-translate([115, 15, 0]) pin();
-translate([130, 15, 0]) pin();
-translate([145, 15, 0]) pin();
-translate([115, 30, 0]) pin();
-translate([130, 30, 0]) pin();
-translate([145, 30, 0]) pin();
-
-
-
-module bar()
+module base()
 {
 difference()
 {
     union()
     {
-        translate([0, 0, 0]) cylinder(r=10/2, h=10, $fn=100);
-        translate([0, -10/2, 0]) cube([100, 10, 10]);
-        translate([100, 0, 0]) cylinder(r=10/2, h=10, $fn=100);
+        rotate([0, 0, 180]) hinge_b();
+        translate([-30/2, -40/2, -7/2-4]) cube([30, 50, 4]);
     }
-    
-    translate([0, 0, -gap1]) cylinder(r=8/2, h=10+gap2, $fn=100);
-    translate([10, 0, -gap1]) cylinder(r=8/2, h=10+gap2, $fn=100);
-    translate([20, 0, -gap1]) cylinder(r=8/2, h=10+gap2, $fn=100);
-    translate([30, 0, -gap1]) cylinder(r=8/2, h=10+gap2, $fn=100);
-    translate([40, 0, -gap1]) cylinder(r=8/2, h=10+gap2, $fn=100);
-    translate([50, 0, -gap1]) cylinder(r=8/2, h=10+gap2, $fn=100);
-    translate([60, 0, -gap1]) cylinder(r=8/2, h=10+gap2, $fn=100);
-    translate([70, 0, -gap1]) cylinder(r=8/2, h=10+gap2, $fn=100);
-    translate([80, 0, -gap1]) cylinder(r=8/2, h=10+gap2, $fn=100);
-    translate([90, 0, -gap1]) cylinder(r=8/2, h=10+gap2, $fn=100);
-    translate([100, 0, -gap1]) cylinder(r=8/2, h=10+gap2, $fn=100);
+    translate([-30/4, (-40/2-3)/2, -7/2-4]) cylinder(r=4/2, h=30, center=true, $fn=100);
+    translate([+30/4, (+40/2+3)/2, -7/2-4]) cylinder(r=4/2, h=30, center=true, $fn=100);
 }
 }
 
-
-module pin()
+module arm()
 {
+xx=30/3-0.2;
 difference()
 {
     union()
     {
-        translate([0, 0, 0]) cylinder(r=8/2-0.2, h=22, $fn=100);
-        translate([0, 0, 0]) cylinder(r=10/2, h=2, $fn=100);
+        rotate([0, 0, 0]) hinge_a();
+        translate([-xx/2, -6/2, 7/2]) cube([xx, 6, 6]);
+        translate([-xx/2, 6/2, 7/2+6]) cube([xx, 5, 5]);
+        translate([-xx/2, -6/2, 7/2+6]) cube([xx, 6, 30]);
     }
 }
 }
+
+
+
+module hinge_a(x=30, h=7)
+{
+    rotate([180, 0, 0]) hinge_one(x, h);
+}
+module hinge_b(x=30, h=7)
+{
+    translate([-x/3-0.1, 0, 0]) hinge_one(x, h);
+    translate([x/3+0.1, 0, 0]) hinge_one(x, h);
+    translate([-x/2+7, 0, 0]) rotate([90, 0, 90]) difference()
+    {
+        cylinder(r=2, h=1, center=true, $fn=100 );
+        cylinder(r=1, h=1+gap2, center=true, $fn=100 );
+    }
+}
+module hinge_one(x=30, h=7)
+{
+r = 6;
+xx = x/3-0.2;
+o = 1.5;
+difference()
+{
+    union()
+    {
+        rotate([90, 0, 90]) cylinder(r=r/2, h=xx, center=true, $fn=100);
+        translate([-xx/2, -r/2, -h/2]) cube([xx, r, h/2]);
+    }
+    rotate([90, 0, 90]) cylinder(r=o, h=xx+gap1, center=true, $fn=100);
+}
+}
+
+
+
