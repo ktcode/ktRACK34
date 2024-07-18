@@ -9,11 +9,13 @@ gap1 = 0.001;
 gap2 = 0.002;
 th = 2;
 
-
+x = 43;
+y = 37;
+z = 25;
 
 base();
 arm();
-
+lock();
 
 
 module base()
@@ -22,29 +24,47 @@ difference()
 {
     union()
     {
-        rotate([0, 0, 180]) hinge_b();
-        translate([-30/2, -40/2, -7/2-4]) cube([30, 50, 4]);
+        translate([-7/2-th,  22, 30/2-5]) rotate([0, 90, 0]) hinge_a();
+        
+        translate([-th, -th, -5]) cube([x+th*2+5, y+th*2, z+5]);
     }
-    translate([-30/4, (-40/2-3)/2, -7/2-4]) cylinder(r=4/2, h=30, center=true, $fn=100);
-    translate([+30/4, (+40/2+3)/2, -7/2-4]) cylinder(r=4/2, h=30, center=true, $fn=100);
+    translate([-th-gap1, -th-gap1, -10]) cube([x+5+th*2+gap2, 19+th, 10]);
+    translate([0, 0, -gap1]) cube([x, y, z+gap2]);
+    translate([x/2-5/2, y+th-13+gap1, -5-gap1]) cube([5, 13, z+5+gap2]);
+    translate([x-12, -5, z-4]) cube([10, 10, 10]);
+    translate([x+th+gap1,  13, 18]) rotate([0, 90, 0]) cylinder(r=7/2, h=10, center=true, $fn=100);
 }
 }
 
 module arm()
 {
-xx=30/3-0.2;
 difference()
 {
     union()
     {
-        rotate([0, 0, 0]) hinge_a();
-        translate([-xx/2, -6/2, 7/2]) cube([xx, 6, 6]);
-        translate([-xx/2, 6/2, 7/2+6]) cube([xx, 5, 5]);
-        translate([-xx/2, -6/2, 7/2+6]) cube([xx, 6, 30]);
+        translate([-7/2-th,  22, 30/2-5]) rotate([0, 90, -90]) hinge_b();
+        translate([-6.5-th, 19+6.5, -5]) cube([6, 19.5, z+5]);
+        translate([-6.5-th, y+th, -5]) cube([6.5+x+21.5-th, 6, z+5]);
+        translate([x+21.5-th-5-th, 19+6.5, -5]) cube([5, 19.5, z+5]);
     }
 }
 }
 
+module lock()
+{
+difference()
+{
+    union()
+    {
+        translate([x+21.5-th-th, 25, -5-20-th]) cube([th, 20, z+5+40+th*2]);
+        translate([x+21.5-th-th-10, 25, -5-th]) cube([10, 20-6.5, z+5+th*2]);
+    }
+    translate([x+21.5-th-th, 25+20/2, z+(20/2)+th]) rotate([0, 90, 0]) cylinder(r=4/2, h=30, center=true, $fn=100);
+    translate([x+21.5-th-th, 25+20/2, -5-(20/2)-th]) rotate([0, 90, 0]) cylinder(r=4/2, h=30, center=true, $fn=100);
+    
+    translate([x+21.5-th-th-10+th, 25+th+gap1, -5-th+th]) cube([10-th, 20-6.5-th, z+5+th*2-th*2]);
+}
+}
 
 
 module hinge_a(x=30, h=7)
@@ -55,7 +75,7 @@ module hinge_b(x=30, h=7)
 {
     translate([-x/3-0.1, 0, 0]) hinge_one(x, h);
     translate([x/3+0.1, 0, 0]) hinge_one(x, h);
-    translate([-x/2+7, 0, 0]) rotate([90, 0, 90]) difference()
+    translate([-x/2+8, 0, 0]) rotate([90, 0, 90]) difference()
     {
         cylinder(r=2, h=1, center=true, $fn=100 );
         cylinder(r=1, h=1+gap2, center=true, $fn=100 );
