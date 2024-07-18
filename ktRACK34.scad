@@ -24,15 +24,15 @@ difference()
 {
     union()
     {
-        translate([-7/2-th,  22, 30/2-5]) rotate([0, 90, 0]) hinge_a();
+        translate([-7/2-th,  27, 30/2-5]) rotate([0, 90, 0]) hinge_a();
         
         translate([-th, -th, -5]) cube([x+th*2+5, y+th*2, z+5]);
     }
-    translate([-th-gap1, -th-gap1, -10]) cube([x+5+th*2+gap2, 19+th, 10]);
+    translate([-th-gap1, -th-gap1, -10]) cube([x+5+th*2+gap2, 24+th, 10]);
     translate([0, 0, -gap1]) cube([x, y, z+gap2]);
-    translate([x/2-5/2, y+th-13+gap1, -5-gap1]) cube([5, 13, z+5+gap2]);
-    translate([x-12, -5, z-4]) cube([10, 10, 10]);
-    translate([x+th+gap1,  13, 18]) rotate([0, 90, 0]) cylinder(r=7/2, h=10, center=true, $fn=100);
+    translate([x/2-5/2-0.5, y+th-13+gap1, -5-gap1]) cube([5.5, 13, z+5+gap2]);
+    translate([x-12-4, -5, z-4]) cube([10, 10, 10]);
+    translate([x+th+gap1,  12, 18]) rotate([0, 90, 0]) cylinder(r=7/2, h=10, center=true, $fn=100);
 }
 }
 
@@ -42,10 +42,10 @@ difference()
 {
     union()
     {
-        translate([-7/2-th,  22, 30/2-5]) rotate([0, 90, -90]) hinge_b();
-        translate([-6.5-th, 19+6.5, -5]) cube([6, 19.5, z+5]);
-        translate([-6.5-th, y+th, -5]) cube([6.5+x+21.5-th, 6, z+5]);
-        translate([x+21.5-th-5-th, 19+6.5, -5]) cube([5, 19.5, z+5]);
+        translate([-7/2-th,  27, 30/2-5]) rotate([180, -90, -90]) hinge_b();
+        translate([-6.5-th, 24+6.5, -5]) cube([6, 14.5, z+5]);
+        translate([-6.5-th, y+th+1, -5]) cube([6.5+x+21.5-th, 5, z+5]);
+        translate([x+21.5-th-5-th, 19+6.5+6, -5]) cube([5, 19.5-6, z+5]);
     }
 }
 }
@@ -57,15 +57,19 @@ difference()
     union()
     {
         translate([x+21.5-th-th, 25, -5-20-th]) cube([th, 20, z+5+40+th*2]);
-        translate([x+21.5-th-th-10, 25, -5-th]) cube([10, 20-6.5, z+5+th*2]);
     }
     translate([x+21.5-th-th, 25+20/2, z+(20/2)+th]) rotate([0, 90, 0]) cylinder(r=4/2, h=30, center=true, $fn=100);
     translate([x+21.5-th-th, 25+20/2, -5-(20/2)-th]) rotate([0, 90, 0]) cylinder(r=4/2, h=30, center=true, $fn=100);
-    
-    translate([x+21.5-th-th-10+th, 25+th+gap1, -5-th+th]) cube([10-th, 20-6.5-th, z+5+th*2-th*2]);
+}
+difference()
+{
+    union()
+    {
+        translate([x+21.5-th-th-10, 25, -5-th-4/2]) cube([10, 20-6.5, z+5+th*2+4]);
+    }
+    translate([x+21.5-th-th-10+th, 25+th+gap1+0.5, -5-th+th-4/2]) rotate([0, 0, -1]) cube([10-th, 20-6.5-th, z+5+th*2-th*2+4]);
 }
 }
-
 
 module hinge_a(x=30, h=7)
 {
